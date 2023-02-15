@@ -1,0 +1,16 @@
+spring:
+    data source:
+        url: jdbc:mysql://localhost:3306/sf
+        username: root
+        password: baza
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        show-sql: true
+
+        properties:
+            hibernate:
+                format_sql: true
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQLDialect
