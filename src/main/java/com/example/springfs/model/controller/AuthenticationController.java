@@ -1,4 +1,4 @@
-package com.example.springfs.controller;
+package com.example.springfs.model.controller;
 
 import com.example.springfs.config.AuthenticationRequest;
 import com.example.springfs.config.AuthenticationResponse;
