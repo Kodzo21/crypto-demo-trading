@@ -1,10 +1,11 @@
 spring:
     data source:
-        url: jdbc:mysql://localhost:3306/sf
-        username: root
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
         password: baza
-        driver-class-name: com.mysql.cj.jdbc.Driver
+        driver-class-name: org.postgresql.Driver
     jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
         hibernate:
             ddl-auto: create-drop
         show-sql: true
@@ -12,5 +13,6 @@ spring:
         properties:
             hibernate:
                 format_sql: true
-        database: mysql
-        database-platform: org.hibernate.dialect.MySQLDialect
+                show_sql: true
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+        database: postgresql
