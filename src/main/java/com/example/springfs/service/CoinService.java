@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,5 +16,9 @@ public class CoinService  {
 
     public void saveAll(List<Coin> coins){
         coinRepository.saveAll(coins);
+    }
+
+    public Optional<Coin> findById(String id) {
+        return coinRepository.findById(id);
     }
 }

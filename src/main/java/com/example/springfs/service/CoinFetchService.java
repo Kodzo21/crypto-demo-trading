@@ -1,8 +1,12 @@
 package com.example.springfs.service;
 
 
+import com.example.springfs.config.CoinMarketResponse;
 import com.example.springfs.model.Coin;
+import com.example.springfs.model.CoinPrice;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpHeaders;
@@ -11,11 +15,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CoinFetchService {
 
     private final CoinService coinService;
+    private final CoinPriceService coinPriceService;
     private final WebClient webClient =  WebClient.builder()
             .baseUrl("https://api.coingecko.com/api/v3")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -30,7 +38,20 @@ public class CoinFetchService {
                 .subscribe(coinService::saveAll);
     }
 
-    @Scheduled(fixedRate = 60000)
+
+    @Scheduled(initialDelay = 5000,fixedRate = 60000)
+    public void getCryptocurrencyUsdExchangeRate(){
+        System.out.println("Start");
+        getWebClientRequest()
+                .retrieve()
+                .bodyToFlux(CoinMarketResponse.class)
+                .subscribe(coinM -> {
+                    CoinPrice coinPrice = new CoinPrice();
+                    coinService.findById(coinM.getId()).ifPresent(coinPrice::setCoin);
+                     coinPrice.setVolume(coinM.getCurrent_price());
+                     coinPriceService.save(coinPrice);
+                });
+    }
 
     private WebClient.RequestHeadersSpec<?> getWebClientRequest(){
         return webClient.get()
