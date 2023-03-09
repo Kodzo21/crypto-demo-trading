@@ -4,7 +4,6 @@ package com.example.springfs.service;
 import com.example.springfs.config.CoinMarketResponse;
 import com.example.springfs.model.Coin;
 import com.example.springfs.model.CoinPrice;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -14,8 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
